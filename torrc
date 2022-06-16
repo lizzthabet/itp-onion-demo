@@ -1,3 +1,8 @@
+## Welcome to the Tor default configuration file! Before you can 
+## run this file, you'll need to edit the `hidden_service` section, 
+## as explained by the TODO comment on line 77.
+
+## ---------------------------------------------
 ## Configuration file for a typical Tor user
 ## Last updated 28 February 2019 for Tor 0.3.5.1-alpha.
 ## (may or may not work for much older or much newer versions of Tor.)
