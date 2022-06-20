@@ -3,13 +3,20 @@
 
 This repository includes a basic HTML site and Tor configuration to be used to run a local web server that's accessible through onion routing. It follows the [Set Up Your Onion Service guide](https://community.torproject.org/onion-services/setup/) ([onion link](http://xmrhfasfg5suueegrnc4gsgyi2tyclcy5oz7f5drnrodmdtob6t2ioyd.onion/onion-services/setup/index.html)) on the Tor Project.
 
-These instructions are WIP, but the demo content is finalized!
-
 ## Requirements
-* The `tor` binary that will let you run an onion service locally. See [installation instructions](https://community.torproject.org/onion-services/setup/install/) ([onion link](http://xmrhfasfg5suueegrnc4gsgyi2tyclcy5oz7f5drnrodmdtob6t2ioyd.onion/onion-services/setup/install/index.html)) for each OS.
-  * Note: little-t-tor (the `tor` binary) is most easily installed with Homebrew on macOS. The installation instructions vary based on your Linux package manager, so follow those instructions closely. For Windows users, I believe `tor` can be compiled and installed from the [source code](https://www.torproject.org/download/tor/index.html) ([onion link](http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion/download/tor/index.html)), but I haven't tried this myself. 
+
+There are two demo options: one that's more beginner and one that's more intermediate. If you're comfortable running terminal commands and navigating the command line, try the intermediate demo.
+
+**For both demos, you'll need:**
 * A browser that can access the Tor network, like [Tor Browser](https://www.torproject.org/download/) (recommended) or [Brave Browser](https://brave.com/)
   * Note: The Tor Project only endorses Tor Browser for visiting websites with Tor, since it can't guarantee external implementations. Plus, Tor Browser has other privacy features, like steps it takes to prevent fingerprinting.
+
+**For the beginner demo, you'll need:**
+* [OnionShare](https://onionshare.org/) ([onion link](http://lldan5gahapx5k7iafb3s4ikijc4ni7gx5iywdflkba5y2ezyg6sjgyd.onion/#download))
+
+**For the intermediate demo, you'll need:**
+* The `tor` binary that will let you run an onion service locally. See [installation instructions](https://community.torproject.org/onion-services/setup/install/) ([onion link](http://xmrhfasfg5suueegrnc4gsgyi2tyclcy5oz7f5drnrodmdtob6t2ioyd.onion/onion-services/setup/install/index.html)) for each OS.
+  * Note: little-t-tor (the `tor` binary) is most easily installed with Homebrew on macOS. The installation instructions vary based on your Linux package manager, so follow those instructions closely. For Windows users, I believe `tor` can be compiled and installed from the [source code](https://www.torproject.org/download/tor/index.html) ([onion link](http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion/download/tor/index.html)), but I haven't tried this myself. 
 * A way to run a web server locally, like nginx, apache, or python
 
 > Tip: Search for the `TODO` comments in this directory to find all the changes you'll need to make to run the demo.
@@ -18,11 +25,16 @@ These instructions are WIP, but the demo content is finalized!
 
 All the files that are under the `/public` directory will be available on your website. The default page is `index.html` and it includes a place for you to introduce yourself and display an image of your work.
 
-**Instructions**: 
+**Instructions**:
 1. Update the `index.html` page with your name, pronouns, and any text you'd like to include.
 2. Add an image of something you'd like to share to the `public/` folder. You can name it `my-art` and replace the existing image. *Note*: if your image isn't a `png`, you'll need to update the image filename in the `<img>` tag.
 
-## Step 2: Run a local web server
+**Next**:
+* [Go to the next step in the intermediate demo](#intermediate-demo)
+* [Go to the next step in the beginner demo](#beginner-demo)
+
+## Intermediate demo
+### Step 2: Run a local web server
 
 The next step is running a local static web server that will serve all the files in the `/public` directory. Below are examples using `python3` and `nginx` using the sample configuration file in this repo.
 
@@ -48,7 +60,7 @@ nginx -c "$(pwd)/nginx.conf"
 
 After starting your web server, verify that you can access the site by visiting `localhost:3000` in your browser. (Tor Browser won't connect to `localhost`, so use your default browser instead.) **It's important to verify that your local server is up and your website is accessible, otherwise the following steps won't work.**
 
-## Step 3. Start your `hidden_service` site
+### Step 3. Start your `hidden_service` site
 
 Next, we'll config and start a "location-hidden service" that will connect to your local web server and make it accessible over the Tor network.
 
@@ -68,12 +80,11 @@ A Tor service is configured through a `torrc` file, which is included in this re
    to copy the onion address to your clipboard.
 5. Open Tor Browser and navigate to your onion site's address. You should see the same website as what's being served on your `localhost:3000`.
 
-Congratulations, you have an onion site!
+*Congratulations, you have an onion site!*
 
-## Debugging
+### Debugging
 
-<!-- TODO (lizz): Add information about nginx testing, tor config verification, and local server access. Add info on tor restart/reload. -->
-### General questions
+#### General questions
 
 For general questions about running `tor` and its configuration, you can look at the `man` page, which contains helpful information about Tor options.
 ```sh
@@ -81,7 +92,7 @@ man tor
 ```
 You can search the `man` page by pressing `/` and typing the term you're searching for. `n` will navigate forward in the search results, `p` will navigate backwards, and `enter` will exit the search. `q` will exit the `man` page.
 
-### The onion address isn't loading
+#### The onion address isn't loading
 
 First, verify that your website is accessible locally at `localhost:3000`. If it's not, then it won't be available over Tor, since Tor is routing network requests to your local server.
 
@@ -96,47 +107,41 @@ If both the web server and `tor` are running properly, double-check that you cop
 
 If none of those solve the problem, it's possible that the onion site is taking a second to become available over Tor. Try accessing your site again in a minute.
 
-## Teardown
-
-<!-- TODO (lizz): Polish this section a bit -->
+### Teardown
 
 To stop Tor, navigate to the terminal session that Tor is running in. You should see logs from the Tor process running. Press `CTRL + C` in the terminal window to stop Tor.
 
-Alternatively, you can find the process id and send a termination signal to the process.
+Alternatively, you can find the process id and send a termination signal to `tor`. Here's one way to get the process id:
+```sh
+ps -ax | grep '\btor\b'
+```
 
-<!-- TODO(lizz): Add more information here -->
+To quit Tor:
+```sh
+kill <process-id>
+```
 
-To reload Tor:
+If you make a change to the `torrc` and need to reload the process, you can:
 ```sh
 kill -s hup <process-id>
 ```
 
-Here's a quick excerpt from the tor manual page about what signals it handles:
-```sh
-Tor catches the following signals:
+The manual page (accessible through `man tor`) lists additional signals that the `tor` process will handle.
 
-       SIGTERM
-           Tor will catch this, clean up and sync to disk if necessary, and exit.
+## Beginner demo
 
-       SIGINT
-           Tor clients behave as with SIGTERM; but Tor servers will do a controlled slow shutdown, closing listeners and waiting 30 seconds before exiting. (The delay can be
-           configured with the ShutdownWaitLength config option.)
+### Step 2. Start your onion site
 
-       SIGHUP
-           The signal instructs Tor to reload its configuration (including closing and reopening logs), and kill and restart its helper processes if applicable.
+Open OnionShare and go to the "Host a Website" option.
 
-       SIGUSR1
-           Log statistics about current connections, past connections, and throughput.
+Click "Add files" or drag and drop the contents of the `public/` folder into OnionShare.
 
-       SIGUSR2
-           Switch all logs to loglevel debug. You can go back to the old loglevels by sending a SIGHUP.
+Make sure to check the option `This is a public OnionShare service`, and then click "Start sharing."
 
-       SIGCHLD
-           Tor receives this signal when one of its helper processes has exited, so it can clean up.
+*Congratulations, you have an onion site!*
 
-       SIGPIPE
-           Tor catches this signal and ignores it.
+Copy the `.onion` address so you can share it.
 
-       SIGXFSZ
-           If this signal exists on your platform, Tor catches and ignores it.
-```
+### Teardown
+
+When you're done with sharing your site files, click the "Stop sharing" button. That's it!
