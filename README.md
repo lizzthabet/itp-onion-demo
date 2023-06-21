@@ -1,5 +1,5 @@
 # 🧅 Share one thing! Onion-style 🧅
-*ITP Camp 2022 demo*
+*ITP Camp demo*
 
 This repository includes a basic HTML site and Tor configuration to be used to run a local web server that's accessible through onion routing. It follows the [Set Up Your Onion Service guide](https://community.torproject.org/onion-services/setup/) ([onion link](http://xmrhfasfg5suueegrnc4gsgyi2tyclcy5oz7f5drnrodmdtob6t2ioyd.onion/onion-services/setup/index.html)) on the Tor Project.
 
@@ -16,7 +16,7 @@ There are two demo options: one that's more beginner and one that's more interme
 
 **For the intermediate demo, you'll need:**
 * The `tor` binary that will let you run an onion service locally. See [installation instructions](https://community.torproject.org/onion-services/setup/install/) ([onion link](http://xmrhfasfg5suueegrnc4gsgyi2tyclcy5oz7f5drnrodmdtob6t2ioyd.onion/onion-services/setup/install/index.html)) for each OS.
-  * Note: little-t-tor (the `tor` binary) is most easily installed with Homebrew on macOS. The installation instructions vary based on your Linux package manager, so follow those instructions closely. For Windows users, I believe `tor` can be compiled and installed from the [source code](https://www.torproject.org/download/tor/index.html) ([onion link](http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion/download/tor/index.html)), but I haven't tried this myself. 
+  * Note: little-t tor (the `tor` binary) is most easily installed with Homebrew on macOS. The installation instructions vary based on your Linux package manager, so follow those instructions closely. For Windows users, you'll need to download the [Tor Expert Bundle](https://www.torproject.org/download/tor/index.html) ([onion link](http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion/download/tor/index.html)). There are helpful detailed [instructions for Windows](https://miloserdov.org/?p=1839&PageSpeed=noscript) from Alexey Miloserdov. 
 * A way to run a web server locally, like nginx, apache, or python
 
 > Tip: Search for the `TODO` comments in this directory to find all the changes you'll need to make to run the demo.
